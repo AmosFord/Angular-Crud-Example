@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Ford Employee Test App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+     
+    <script src="node_modules/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+     
+    <script src="node_modules/angular-bootstrap/dist/ui-bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/angular-route/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/angular-resource/angular-resource.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/app.angular.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <header class="row-fluid">
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">
+                        Employees.com
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div ng-view></div>
+    </div>
+</body>
+</html>

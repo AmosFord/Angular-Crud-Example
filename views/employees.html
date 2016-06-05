@@ -1,0 +1,15 @@
+<div class="employee-list">
+    <h1>Employees
+        <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add An Employee</a>
+    </h1>
+    <alert ng-if="employees.length == 0" type="info">There are currently no employeess, be the first to add one!</alert>
+    <div class="list-group">
+        <a href="#/employee/{{employee._id}}" ng-repeat="employee in employees" ng-init="employee = employee.doc" class="employee list-group-item">
+            <h3>
+                {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
+                <em>{{employee.designation}}</em>
+                <small class="pull-right">{{employee.abv}}% abv</small>
+            </h3>
+        </a>
+    </div>
+</div>
