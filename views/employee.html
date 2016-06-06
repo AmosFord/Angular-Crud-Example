@@ -5,28 +5,32 @@
         <h1 ng-if="employee._id">Edit employee</h1>
         <div class="form-group">
             <label>First Name</label>
-            <input type="text" class="form-control" ng-model="employee.firstName">
+            <input type="text" class="form-control" ng-model="employee.firstName" pattern="[A-Za-z]{1,30}">
         </div>
         <div class="form-group">
             <label>Middle Name</label>
-            <input type="text" class="form-control" ng-model="employee.middleName">
+            <input type="text" class="form-control" ng-model="employee.middleName" pattern="[A-Za-z]{1,30}">
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text" class="form-control" ng-model="employee.lastName">
+            <input type="text" class="form-control" ng-model="employee.lastName" pattern="[A-Za-z]{1,50}">
         </div>
         <div class="form-group">
             <label>Age</label>
-            <input type="text" class="form-control" ng-model="employee.age">
+            <input type="number" class="form-control" ng-model="employee.age" min="14" max="110">
         </div>
-        <div class="form-group">
+       <!-- <div class="form-group">
             <label>Designation</label>
             <input type="text" class="form-control" ng-model="employee.designation">
         </div>
-        <div class="form-group">
-            <label>Salary</label>
-            <input type="text" class="form-control" ng-model="employee.salary">
+        -->
+        <div class="form-group" ng-controller="myCtrl">
+            <label>Designation</label>
+            <select ng-model="employee.designation" ng-options="option for option in designations" ng-change="getSalaryRanges()"></select><br><br>
+             <label>Salary from {{ salaryRanges[0]}} to {{ salaryRanges[1]}}</label>
+            <input type="number" class="form-control" ng-model="employee.salary" min="{{ salaryRanges[0]}}" max="{{ salaryRanges[1]}}" step="500">
         </div>
+
         <button class="btn btn-default" ng-click="toggleEdit()">Cancel</button>
         <button class="btn btn-success pull-right" ng-click="save()">Save</button>
     </div>

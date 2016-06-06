@@ -23,10 +23,6 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap'])
         });
     })
      
-    .controller('Employee', function($scope) {
-         
-    })
-
 //Employee factory
 .factory('Employee', function () {
  
@@ -183,4 +179,25 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap'])
         });
     }
 })
+
+.controller('myCtrl', function($scope) {
+    var possibleDesignations = ['Snr. Manager', 'Manager', 'Asst. Manager', 'Lead', 'Snr. Consultant', 'Consultant'];
+    var possibleSalaryRanges = [["100000","130000"],
+                      ["90000","99999"],
+                      ["80000","89999"],
+                      ["60000","79999"],
+                      ["50000","59000"],
+                      ["40000","49000"]];
+    $scope.designations = possibleDesignations;
+    $scope.salaryRanges = []; // we'll get these later
+    $scope.getSalaryRanges = function(){
+        // just some silly stuff to get the key of what was selected since we are using simple arrays.
+        var key = $scope.designations.indexOf($scope.employee.designation);
+        // Here you could actually go out and fetch the options for a server.
+        var myNewOptions = possibleSalaryRanges[key];
+        // Now set the options.
+        // If you got the results from a server, this would go in the callback
+        $scope.salaryRanges = myNewOptions;
+    };
+});
 
