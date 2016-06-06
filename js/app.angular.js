@@ -33,9 +33,14 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap'])
   /**
    * Constructor, with class name
   */
-  function Employee(_id, firstName, lastName, middleName, age, designation, salary) {
+  function Employee(firstName, lastName, middleName, age, designation, salary) {
     // Public properties, assigned to the instance ('this')
-    this._id = _id;
+   /** '_id':null,
+    'setId' : function() { 
+      this._id = encodeURIComponent((this.fistName + '_' + this.middleName + '_' + this.lastName + '_' + this.designation).replace(' ', '_'));
+    },
+    */
+    this._id = encodeURIComponent((this.fistName + '_' + this.middleName + '_' + this.lastName + '_' + this.designation).replace(' ', '_'));
     this.firstName = firstName;
     this.lastName = lastName;
     this.middlename = middlename;
@@ -91,7 +96,18 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap'])
   /**
    * Return the constructor function
    */
-  return Employee;
+  //return Employee;
+  return {
+       '_id':null,
+       'setId' : function() { 
+             this._id = encodeURIComponent((this.fistName + '_' + this.middleName + '_' + this.lastName + '_' + this.designation).replace(' ', '_'));
+        },
+        'firstName' : '',
+        'middleName' : '',
+        'age' : '',
+        'designation' : '',
+        'salary' : ''
+    };
 })
 
 
@@ -117,4 +133,54 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap'])
      
     return Employees;
 })
-;
+
+.controller('Employee', function($scope, $location, $routeParams, Employees, Employee) {
+    $scope.edit = false;
+    $scope.review = false;
+     
+    if( $routeParams.employeeId == 'new' )
+    {
+        $scope.employee = new Employees(Employee);
+        $scope.edit = true;
+    }
+    else
+    {
+        getEmployee()
+    }
+     
+    $scope.save = function() {
+        if( $routeParams.employeeId == 'new' )
+        {
+            $scope.employee.setId();
+            $scope.employee.$save().then(function() {
+                $location.path('/');
+            });
+        }
+        else
+        {
+            $scope.employee.$save().then(function() {
+                getEmployee();
+            })
+             
+            $scope.edit = false;
+        }
+    }
+     
+    $scope.toggleEdit = function() {
+        if( $routeParams.employeeId == 'new' )
+        {
+            $location.path('/');
+        }
+        else
+        {
+            $scope.edit = $scope.edit ? false : true;
+        }
+    }
+     
+    function getEmployee() {
+        Employees.get({id:$routeParams.employeeId}, function(employee) {
+            $scope.employee = employee;
+        });
+    }
+})
+

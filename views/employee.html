@@ -1,0 +1,41 @@
+<div class="employee">
+    <a href="#/">< All Employees</a>
+    <div ng-if="edit">
+        <h1 ng-if="!employee._id">Add an employee</h1>
+        <h1 ng-if="employee._id">Edit employee</h1>
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" ng-model="employee.firstName">
+        </div>
+        <div class="form-group">
+            <label>Middle Name</label>
+            <input type="text" class="form-control" ng-model="employee.middleName">
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" ng-model="employee.lastName">
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="text" class="form-control" ng-model="employee.age">
+        </div>
+        <div class="form-group">
+            <label>Designation</label>
+            <input type="text" class="form-control" ng-model="employee.designation">
+        </div>
+        <div class="form-group">
+            <label>Salary</label>
+            <input type="text" class="form-control" ng-model="employee.salary">
+        </div>
+        <button class="btn btn-default" ng-click="toggleEdit()">Cancel</button>
+        <button class="btn btn-success pull-right" ng-click="save()">Save</button>
+    </div>
+    <div ng-if="!edit">
+        <h3>
+            {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
+            <em>{{employee.designation}}</em>
+            <small><a ng-click="toggleEdit()">Edit</a></small>
+            <!--<small class="pull-right">{{employee.abv}}% abv</small>-->
+        </h3>
+    </div>
+</div>
