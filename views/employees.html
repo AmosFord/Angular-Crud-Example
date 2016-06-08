@@ -1,4 +1,7 @@
 <div class="employee-list">
+    <div class="text-center">
+        <h1> Employees <span class="glyphicon glyphicon-user"></span> Total:  {{ employees.length}}</h1> 
+    </div>
     <alert ng-if="employees.length == 0" type="info">There are currently no employeess, be the first to add one!</alert>
      <div class="container" ng-controller="tableCtrl">
         <div class="table-container">
@@ -33,8 +36,7 @@
             </div>
             <div class="col-xs-4 col-sm-2">
                 <button class="btn btn-danger btn-block" ui-sref="main.delete({employeeId:idSelectedEmployee})" ui-sref-opts="{reload: true, notify: true}"><span class="glyphicon glyphicon-minus"></span> Delete</button>
-            </div>
-           
+            </div>      
         </div>
         <br>
         <div ui-view class="col-xs-12"></div>
