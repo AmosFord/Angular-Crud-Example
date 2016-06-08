@@ -21,21 +21,16 @@
             }          
         }).then(function(response) {
               console.log("coming from servicejs", response.data);
-              //return data when promise resolved
-              //that would help you to continue promise chain.
               return response.data;
             });
     return service; 
       };
 
-      this.addEmployee = function() {
+      this.addEmployee = function(selectedEmployee) {
         var service = $http({
           method: 'POST',
-           headers: { 
-                'Accept': 'application/json',
-                'Content-Type': 'application/json' 
-            },
           url: jsonLoc,
+          data: selectedEmployee
         });
         return service;
       };

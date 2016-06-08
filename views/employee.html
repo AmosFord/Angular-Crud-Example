@@ -1,45 +1,45 @@
 <div class="employee">
-    <a href="#/">< All Employees</a>
     <div ng-if="edit">
         <h1 ng-if="!employee._id">Add an employee</h1>
         <h1 ng-if="employee._id">Edit employee</h1>
-        <div class="form-group">
+        <div class="form-group col-sm-4">
             <label>First Name</label>
-            <input type="text" class="form-control" ng-model="employee.firstName" pattern="[A-Za-z]{1,30}">
+            <input type="text" class="form-control"  size="30" ng-model="employee.firstName" pattern="[A-Za-z]{1,30}">
         </div>
-        <div class="form-group">
+        <div class="form-group col-sm-4">
             <label>Middle Name</label>
-            <input type="text" class="form-control" ng-model="employee.middleName" pattern="[A-Za-z]{1,30}">
+            <input type="text" class="form-control"  size="30" ng-model="employee.middleName" pattern="[A-Za-z]{1,30}">
         </div>
-        <div class="form-group">
+        <div class="form-group col-sm-4">
             <label>Last Name</label>
-            <input type="text" class="form-control" ng-model="employee.lastName" pattern="[A-Za-z]{1,50}">
+            <input type="text" class="form-control"  size="30" ng-model="employee.lastName" pattern="[A-Za-z]{1,50}">
         </div>
-        <div class="form-group">
+        <div class="form-group col-sm-4">
             <label>Age</label>
-            <input type="number" class="form-control" ng-model="employee.age" min="14" max="110">
+            <input type="number" class="form-control"  size="3"ng-model="employee.age" min="14" max="110">
         </div>
-       <!-- <div class="form-group">
-            <label>Designation</label>
-            <input type="text" class="form-control" ng-model="employee.designation">
+        <div ng-controller="myCtrl">
+            <div class="form-group col-sm-4">
+                <label>Designation</label>
+                <select class="form-control" ng-model="employee.designation" ng-options="option for option in designations" ng-change="getSalaryRanges()"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Salary from {{ salaryRanges[0]}} to {{ salaryRanges[1]}}</label>
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    <input type="number" class="form-control"  size="8"ng-model="employee.salary" min="{{ salaryRanges[0]}}" max="{{ salaryRanges[1]}}" step="500">
+                    <span class="input-group-addon">.00</span>
+                </div>  
+            </div>
         </div>
-        -->
-        <div class="form-group" ng-controller="myCtrl">
-            <label>Designation</label>
-            <select ng-model="employee.designation" ng-options="option for option in designations" ng-change="getSalaryRanges()"></select><br><br>
-             <label>Salary from {{ salaryRanges[0]}} to {{ salaryRanges[1]}}</label>
-            <input type="number" class="form-control" ng-model="employee.salary" min="{{ salaryRanges[0]}}" max="{{ salaryRanges[1]}}" step="500">
-        </div>
-
-        <button class="btn btn-default" ng-click="toggleEdit()">Cancel</button>
-        <button class="btn btn-success pull-right" ng-click="save()">Save</button>
+        <button class="btn btn-default" ng-click="toggleEdit()" ui-sref="main.empty()" ui-sref-opts="{reload: true, notify: true}">Cancel</button>
+        <button class="btn btn-success pull-right" ng-click="save()" ui-sref="main.empty()" ui-sref-opts="{reload: true, notify: true}">Save</button>
     </div>
     <div ng-if="!edit">
         <h3>
             {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
-            <em>{{employee.designation}}</em>
             <small><a ng-click="toggleEdit()">Edit</a></small>
-            <!--<small class="pull-right">{{employee.abv}}% abv</small>-->
+            <small class="pull-right"><em>{{employee.designation}}</em></small>
         </h3>
     </div>
 </div>

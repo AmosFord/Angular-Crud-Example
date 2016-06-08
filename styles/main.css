@@ -1,12 +1,39 @@
 .employee-table {
     width: auto; 
-    height: auto; /* 100/56.25 = 1.778 */
-    background: grey;
+    height: auto;
+    cursor: pointer;
+    margin: auto; 
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	background-color: #f0ad4e;
+	color: white;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
+tr:nth-child(even).selected {
+	 background-color: blue;
+  color: white;
+}
+.table-container {
+	overflow-x:auto;
+    overflow-y:auto;
     max-height: 50vh;
-    max-width: 80vh; /* 16/9 = 1.778 */
-    margin: auto;
-    
 }
 .selected {
-  background-color: red;
+  background-color: blue;
+  color: white;
+}
+.btn-container {
+	margin-top: 10px;
+}
+.btn {
+	display: inline-block;
+}
+.employee-list {
+	margin-bottom: 30px;
 }

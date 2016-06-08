@@ -1,20 +1,5 @@
 angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
-     
-  /*  .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/', {
-                templateUrl: 'views/employees.html',
-                controller: 'Home'
-            }).
-            when('/employee/:employeeId', {
-                templateUrl: 'views/employee.html',
-                controller: 'Employee'
-            }).
-            otherwise({
-                redirectTo: '/'
-            });
-        }]
-    )*/
+
   .config(function ($urlRouterProvider, $stateProvider) {
 
     $urlRouterProvider.otherwise('/');
@@ -23,42 +8,38 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
       .state('main', {
         url: '/',
         templateUrl: 'views/employees.html',
-        controller: 'Home',
-        controllerAs: 'home'
+        controller: 'Employee',
+        controllerAs: 'employee'
       })
-      .state('add', {
-        url: '/employee/{employeeId}',
+      .state('main.add', {
+        url: 'employee/{employeeId}',
         templateUrl: 'views/employee.html',
         controller: 'Employee',
         controllerAs: 'employee'
       })
       .state('main.edit', {
-        url: '/employee/{employeeId}',
+        url: 'employee/{employeeId}',
         templateUrl: 'views/employee.html',
         controller: 'Employee',
         controllerAs: 'employee'
       })
       .state('main.delete', {
-        url: '/delete/:employeeId',
+        url: 'delete/:employeeId',
         templateUrl: 'views/delete.html',
+        controller: 'Employee',
+        controllerAs: 'employee'
+      })
+       .state('main.empty', {
+        url: '',
+        templateUrl: 'views/empty.html',
         controller: 'Employee',
         controllerAs: 'employee'
       });
 
+
   })
 // listing controller
   .controller('Home', function($scope,$http, Employees, employeeService) {
-        Employees.getAll(function(ob) {
-            $scope.employees = ob;
-        });
-    /*function refreshData() {
-       var emps = employeeService.getEmployees();
-        emps.then(function (data) {
-            $scope.employees = data.doc;
-        })
-       
-    }
-    refreshData();*/
     })
 //Employee factory
 .factory('Employee', function () {
@@ -67,12 +48,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
    * Constructor, with class name
   */
   function Employee(firstName, lastName, middleName, age, designation, salary) {
-    // Public properties, assigned to the instance ('this')
-   /** '_id':null,
-    'setId' : function() { 
-      this._id = encodeURIComponent((this.fistName + '_' + this.middleName + '_' + this.lastName + '_' + this.designation).replace(' ', '_'));
-    },
-    */
+
     this._id = encodeURIComponent((this.fistName + '_' + this.middleName + '_' + this.lastName + '_' + this.designation).replace(' ', '_'));
     this.firstName = firstName;
     this.lastName = lastName;
@@ -167,6 +143,8 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
 
 .controller('Employee', function($scope, $location, Employees, Employee, $stateParams, employeeService) {
     $scope.edit = false;
+
+    refreshData();
      
     if( $stateParams.employeeId == 'new' )
     {
@@ -177,38 +155,25 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
     {
         getEmployee()
     }
-     
+      
+  //add & edit employee
    $scope.save = function() {
         if( $stateParams.employeeId == 'new' )
         {
             $scope.employee.setId();
             $scope.employee.$save().then(function() {
-                $location.path('/');
+
             });
+
         }
         else
         {
             $scope.employee.$save().then(function() {
-                $location.path('/');
-            })
              
+            })
             $scope.edit = false;
         }
     }
-    //add employee
-    /* 
-    $scope.save = function() {
-        employeeService.addEmployee()
-        .success(function() {
-          console.log('Employee Added');
-          $location.path('/');
-        })
-        .error(function() {
-          console.log('Error carrying out request');
-          $location.path('/');
-        });
-      };*/
-
        //delete employee
     $scope.remove = function() {
         employeeService.delEmployee($scope.employee)
@@ -225,25 +190,13 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
       $scope.edit = function() {
         employeeService.editEmployee($scope.employee)
         .success(function() {
-          console.log('Employee Updated');
-          $location.path('/');
+          
         })
         .error(function() {
           console.log('Error carrying out request');
         });
+        refreshData();
       };
-
-   /* $scope.remove = function() {
-            $scope.employee._deleted = true;
-            $scope.employee.$save().then(function() {
-                $location.path('/');
-            });
-           /* $http.delete('http://localhost:5984/employees/:id',{'id':'@id'})
-            $scope.employee.removeEmployee.then(function() {
-                $location.path('/');
-            });
-    } add comment back up higher */
-    
 
     $scope.toggleEdit = function() {
         if( $stateParams.employeeId == 'new' )
@@ -254,6 +207,12 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         {
             $scope.edit = $scope.edit ? false : true;
         }
+    }
+    function refreshData() {
+        Employees.getAll(function(ob) {
+            $scope.employees = ob;
+        });
+       
     }
      
     function getEmployee() {
@@ -272,14 +231,13 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
                       ["50000","59000"],
                       ["40000","49000"]];
     $scope.designations = possibleDesignations;
-    $scope.salaryRanges = []; // we'll get these later
+    $scope.salaryRanges = []; 
     $scope.getSalaryRanges = function(){
-        // just some silly stuff to get the key of what was selected since we are using simple arrays.
+        // get the key of what was selected since we are using simple arrays.
         var key = $scope.designations.indexOf($scope.employee.designation);
-        // Here you could actually go out and fetch the options for a server.
+        // fetch the options.
         var myNewOptions = possibleSalaryRanges[key];
         // Now set the options.
-        // If you got the results from a server, this would go in the callback
         $scope.salaryRanges = myNewOptions;
     };
 })
@@ -293,4 +251,5 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
       var earl = '/employee/' +  $scope.idSelectedEmployee;
       $location.path(earl);
     };  
-});
+})
+

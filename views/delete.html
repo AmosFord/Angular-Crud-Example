@@ -1,10 +1,21 @@
 
   <div ng-if="!edit">
         <h3>
-            {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
-            <em>{{employee.designation}}</em>
-            <!--<small class="pull-right">{{employee.abv}}% abv</small>-->
+              {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
+            <small><a ng-click="toggleEdit()">Edit</a></small>
+            <small class="pull-right"><em>{{employee.designation}}</em></small>
         </h3>
 </div>
-<h2>Warning you are about to delete this employee. Continue?</h2>
-<button class="btn btn-danger" ng-click="remove()">Yes</button>
+<div class="col-sm-12">
+	<h3><span class="glyphicon glyphicon-exclamation-sign"></span> Warning you are about to delete:<br>
+	<stong><em>Employee - </em></stong> {{employee.firstName}} {{employee.middleName}} {{employee.lastName}}, {{employee.designation}}</h3>
+	</div>
+<div class="col-sm-12">
+	<h3>Would you like to continue?</h3>
+	<div class="col-xs-4 col-xs-offset-2 col-sm-2 col-sm-offset-4">
+		<button class="btn btn-danger btn-block" ng-click="remove()" ui-sref="main.empty()" ui-sref-opts="{reload: true, notify: true}">Yes</button>
+	</div>
+	<div class="col-xs-4 col-sm-2">
+		<button class="btn btn-default btn-block" ng-click="toggleEdit()" ui-sref="main.empty()" ui-sref-opts="{reload: true, notify: true}">Cancel</button>
+	</div>
+</div>
