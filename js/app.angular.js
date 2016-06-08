@@ -47,12 +47,19 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
 
   })
 // listing controller
-    .controller('Home', function($scope, Employees) {
+  .controller('Home', function($scope,$http, Employees, employeeService) {
         Employees.getAll(function(ob) {
             $scope.employees = ob;
         });
+    /*function refreshData() {
+       var emps = employeeService.getEmployees();
+        emps.then(function (data) {
+            $scope.employees = data.doc;
+        })
+       
+    }
+    refreshData();*/
     })
-     
 //Employee factory
 .factory('Employee', function () {
  
@@ -158,7 +165,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
     return Employees;
 })
 
-.controller('Employee', function($scope, $location, $routeParams, Employees, Employee, $stateParams, employeeService) {
+.controller('Employee', function($scope, $location, Employees, Employee, $stateParams, employeeService) {
     $scope.edit = false;
      
     if( $stateParams.employeeId == 'new' )
@@ -188,10 +195,33 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
             $scope.edit = false;
         }
     }*/
+    //add employee
     $scope.save = function() {
-        employeeService.setEmployee($scope.employee)
+        employeeService.addEmployee()
         .success(function() {
-          console.log('Success!');
+          console.log('Employee Added');
+        })
+        .error(function() {
+          console.log('Error carrying out request');
+        });
+      };
+
+       //delete employee
+    $scope.remove = function() {
+        employeeService.delEmployee($scope.employee)
+        .success(function() {
+          console.log('Employee Deleted');
+        })
+        .error(function() {
+          console.log('Error carrying out request');
+        });
+      };
+
+            // Edit an Employee
+      $scope.edit = function() {
+        employeeService.editEmployee($scope.employee)
+        .success(function() {
+          console.log('Employee Updated');
         })
         .error(function() {
           console.log('Error carrying out request');
@@ -208,17 +238,9 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
                 $location.path('/');
             });
     } add comment back up higher */
-    $scope.remove = function() {
-        employeeService.delEmployee($scope.employee)
-        .success(function() {
-          console.log('Success! Employee Deleted');
-        })
-        .error(function() {
-          console.log('Error carrying out request');
-        });
-      };
-     
-    $scope.toggleEdit = function() {
+    
+
+    /*$scope.toggleEdit = function() {
         if( $stateParams.employeeId == 'new' )
         {
             $location.path('/');
@@ -227,7 +249,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         {
             $scope.edit = $scope.edit ? false : true;
         }
-    }
+    }*/
      
     function getEmployee() {
         Employees.get({id:$stateParams.employeeId}, function(employee) {

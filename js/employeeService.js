@@ -9,16 +9,29 @@
       this.getEmployees = function() {
         var service = $http({
           method: 'GET',
-          url: jsonLoc
-        });
-        return service;
+          url: jsonLoc + '/_all_docs',
+          params: {
+                include_docs: true
+            },
+            isArray:true,
+            transformResponse:function(data) {
+                var returnOb = angular.fromJson(data);
+                console.log("look", returnOb.rows);
+                return returnOb.rows;
+            }          
+        }).then(function(response) {
+              console.log("coming from servicejs", response.data);
+              //return data when promise resolved
+              //that would help you to continue promise chain.
+              return response.data;
+            });
+    return service; 
       };
 
-      this.setEmployee = function(selectedEmployee) {
+      this.addEmployee = function() {
         var service = $http({
           method: 'POST',
           url: jsonLoc,
-          data: selectedEmployee
         });
         return service;
       };
