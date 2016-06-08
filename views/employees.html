@@ -1,9 +1,9 @@
 <div class="employee-list">
     <h1>Employees
-        <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add An Employee</a>
+       <!-- <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add An Employee</a>-->
     </h1>
     <alert ng-if="employees.length == 0" type="info">There are currently no employeess, be the first to add one!</alert>
-    <div class="list-group">
+   <!-- <div class="list-group">
         <a href="#/employee/{{employee._id}}" ng-repeat="employee in employees" ng-init="employee = employee.doc" class="employee list-group-item">
             <h3>
                 {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
@@ -12,7 +12,40 @@
             </h3>
         </a>
     </div>
+
      <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-minus"></span> Delete</a>
       <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-     <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add</a>
+     <a href="#/employee/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add</a>-->
+     <div class="container" ng-controller="tableCtrl">
+        <table class="table table-bordered table-hover employee-table" >
+          <tbody>
+            <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Middle Name</th>
+              <th>Age</th>
+              <th>Designation</th>
+              <th>Salary</th>
+            </tr>
+            <tr ng-repeat="employee in employees" ng-click="setSelected(employee._id)" ng-class="{selected: employee._id === idSelectedEmployee}"  ng-init="employee = employee.doc">
+              <td>{{ employee.lastName }}</td>
+              <td>{{ employee.firstName }}</td>
+              <td>{{ employee.middleName }}</td>
+              <td>{{ employee.age }}</td>
+              <td>{{ employee.designation }}</td>
+              <td>{{ employee.salary }}</td>
+              <!--<td><input type="radio" name="row-selection" ng-value="{{ employee }}" ng-model="selectedEmployee" ng-init="employee = employee.doc"></td>-->
+            </tr>
+          </tbody>
+        </table>
+        <div>
+            <button class="btn btn-danger pull-right" ui-sref="delete({employeeId:idSelectedEmployee})"><span class="glyphicon glyphicon-minus"></span> Delete</button>
+            <button class="btn btn-warning pull-right" ui-sref="edit({employeeId:idSelectedEmployee})"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+            <button class="btn btn-success pull-right" ui-sref="add({employeeId:idSelectedEmployee})"><span class="glyphicon glyphicon-plus"></span>Add</button>
+            <button class="btn btn-success pull-right" ng-click="editSelected()"><span class="glyphicon glyphicon-plus"></span>TESTU</button>
+         
+        </div>
+        <br>
+        <div ui-view></div>
+    </div>
 </div>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
     <title>Ford Employee Test App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/styles/main.css">
@@ -12,7 +15,9 @@
     <script src="node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="node_modules/angular-route/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="node_modules/angular-resource/angular-resource.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.angular.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/employeeService.js"></script>
 </head>
 <body>
     <header class="row-fluid">
@@ -27,7 +32,7 @@
         </nav>
     </header>
     <div class="container">
-        <div ng-view></div>
+        <div ui-view></div>
     </div>
 </body>
 </html>

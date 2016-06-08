@@ -1,9 +1,12 @@
-.employee-list {
-    width: 100vw; 
+.employee-table {
+    width: 60vw; 
     height: 50vw; /* 100/56.25 = 1.778 */
     background: grey;
     max-height: 50vh;
     max-width: 100vh; /* 16/9 = 1.778 */
     margin: auto;
     
+}
+.selected {
+  background-color: red;
 }

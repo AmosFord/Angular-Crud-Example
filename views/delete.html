@@ -1,0 +1,10 @@
+
+  <div ng-if="!edit">
+        <h3>
+            {{employee.firstName}} {{employee.middleName}} {{employee.lastName}} 
+            <em>{{employee.designation}}</em>
+            <!--<small class="pull-right">{{employee.abv}}% abv</small>-->
+        </h3>
+</div>
+<h2>Warning you are about to delete this employee. Continue?</h2>
+<button class="btn btn-danger" ng-click="remove()">Yes</button>
