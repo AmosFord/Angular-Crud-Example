@@ -31,6 +31,10 @@
       this.addEmployee = function() {
         var service = $http({
           method: 'POST',
+           headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
           url: jsonLoc,
         });
         return service;
@@ -39,6 +43,10 @@
       this.editEmployee = function(selectedEmployee) {
         var service = $http({
           method: 'PUT',
+           headers: { 
+              'Accept': 'application/json',
+              'Content-Type': 'application/json' 
+          },
           url: jsonLoc + '/' + selectedEmployee._id
         });
         return service;

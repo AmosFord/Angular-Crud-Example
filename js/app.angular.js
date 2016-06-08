@@ -27,18 +27,18 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         controllerAs: 'home'
       })
       .state('add', {
-        url: '/employee/:employeeId',
-        templateUrl: 'views/employee.html',
-        controller: 'Employee',
-        controllerAs: 'employee'
-      })
-      .state('edit', {
         url: '/employee/{employeeId}',
         templateUrl: 'views/employee.html',
         controller: 'Employee',
         controllerAs: 'employee'
       })
-      .state('delete', {
+      .state('main.edit', {
+        url: '/employee/{employeeId}',
+        templateUrl: 'views/employee.html',
+        controller: 'Employee',
+        controllerAs: 'employee'
+      })
+      .state('main.delete', {
         url: '/delete/:employeeId',
         templateUrl: 'views/delete.html',
         controller: 'Employee',
@@ -171,14 +171,14 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
     if( $stateParams.employeeId == 'new' )
     {
         $scope.employee = new Employees(Employee);
-        $scope.edit = true;
+        $scope.employee.edit = true;
     }
     else
     {
         getEmployee()
     }
      
-   /* $scope.save = function() {
+   $scope.save = function() {
         if( $stateParams.employeeId == 'new' )
         {
             $scope.employee.setId();
@@ -189,28 +189,32 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         else
         {
             $scope.employee.$save().then(function() {
-                getEmployee();
+                $location.path('/');
             })
              
             $scope.edit = false;
         }
-    }*/
+    }
     //add employee
+    /* 
     $scope.save = function() {
         employeeService.addEmployee()
         .success(function() {
           console.log('Employee Added');
+          $location.path('/');
         })
         .error(function() {
           console.log('Error carrying out request');
+          $location.path('/');
         });
-      };
+      };*/
 
        //delete employee
     $scope.remove = function() {
         employeeService.delEmployee($scope.employee)
         .success(function() {
           console.log('Employee Deleted');
+          $location.path('/');
         })
         .error(function() {
           console.log('Error carrying out request');
@@ -222,6 +226,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         employeeService.editEmployee($scope.employee)
         .success(function() {
           console.log('Employee Updated');
+          $location.path('/');
         })
         .error(function() {
           console.log('Error carrying out request');
@@ -240,7 +245,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
     } add comment back up higher */
     
 
-    /*$scope.toggleEdit = function() {
+    $scope.toggleEdit = function() {
         if( $stateParams.employeeId == 'new' )
         {
             $location.path('/');
@@ -249,7 +254,7 @@ angular.module('app', ['ngResource','ngRoute','ui.bootstrap','ui.router'])
         {
             $scope.edit = $scope.edit ? false : true;
         }
-    }*/
+    }
      
     function getEmployee() {
         Employees.get({id:$stateParams.employeeId}, function(employee) {
